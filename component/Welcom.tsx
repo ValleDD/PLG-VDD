@@ -1,40 +1,57 @@
-import React from "react";
-import { StyleSheet, View, Text, Image,Button } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View, Text, Image,Button, Modal, Alert, Pressable } from "react-native";
+import appColors from "../assets/style/appColors";
+import Login from "./Login";
 
 const Welcom = () => {
+  
+  const [modalVisible, setModalVisible] = useState(false);
   return (
-    <View >
-      <View style={styles.imagenP}>
+    <View  style={styles.fondo}>
+      <View>
         <Image
           style={styles.imagen}
           source={require("./../assets/Logo-PLG.png")}
         />
       </View >
-      <View style={styles.text}>
-        <Text style={styles.colorText}>Bienvenidos</Text>
-        <Text style={styles.colorText}>La app donde encontraras informacion variada</Text>
-      </View>
-      <View style={styles.Bstyle}>
-        <Button title="Login" />
-      </View>
+      <View >
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View >
+          <View >
+            <Login/>
+          </View>
+        </View>
+      </Modal>
+      <Pressable
+      
+        onPress={() => setModalVisible(true)}>
+        <Text>Show Modal</Text>
+      </Pressable>
+    </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   imagen: {
-    margin: 2,
+    alignItems:"center",
+    alignContent:"center",
     height: 200,
     width: 200,
   },
-  imagenP:{
-    display: 'flex',
-    flex: 1,
-  },
+  
   text:{
-    flex:1,
+    
     alignItems: 'center',
     justifyContent: 'center',
+    padding:50,
     
   },
   colorText:{
@@ -42,11 +59,16 @@ const styles = StyleSheet.create({
     fontSize:24,
   },
   Bstyle:{
-    flex: 1,
-    borderColor:'red',
-   
-    
-  }
+    alignItems: 'center',
+    width:100,
+  },
+  fondo:{
+    backgroundColor: appColors.primary,
+    width: '100%',
+    height: '100%',
+    alignContent: 'center',
+    alignItems: 'center',
+  },
  
 });
 
