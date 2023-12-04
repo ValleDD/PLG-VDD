@@ -14,7 +14,8 @@ import Login from "./Login";
 import { useNavigation } from "@react-navigation/native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Welcom = ({ navigation }) => {
+const Welcom = ({navigation}) => {
+   
   return (
     <View style={styles.fondo}>
       <View>
