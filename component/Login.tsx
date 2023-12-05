@@ -11,20 +11,27 @@ import {
 } from "react-native";
 import appColors from "../assets/style/appColors";
 
-const Login = () => {
-  const [usuario, setUsuario] = useState("");
-  const [contraseña, setContraseña] = useState("");
+const users =[
+{username:"valle",password:"valle"},
+{username:"Carmen",password:"Carmen"},
+{username:"Adassa",password:"Adassa"},
+]
+
+const Login = ({navigation}) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = () => {
-    if (usuario === "usuario" && contraseña === "contraseña") {
-      Alert.alert("Login exitoso", "Bienvenido");
+    // Verifica si las credenciales coinciden con algún usuario en el array
+    const user = users.find((user) => user.username === username && user.password === password);
+
+    if (user) {
+      navigation.navigate('Porfolio');
     } else {
-      Alert.alert(
-        "Error de inicio de sesión",
-        "Usuario o contraseña incorrectos"
-      );
+      alert('Credenciales incorrectas');
     }
   };
+  
   return (
     <View style={styles.fondo}>
       <SafeAreaView style={styles.container}>
@@ -32,18 +39,18 @@ const Login = () => {
         <TextInput
           placeholder="Usuario"
           style={styles.input}
-          value={usuario}
-          onChangeText={(text) => setUsuario(text)}
+          value={username}
+          onChangeText={(text) => setUsername(text)}
         />
         <Text>Contraseña</Text>
         <TextInput
           style={styles.input}
           placeholder="Contraseña"
           secureTextEntry
-          value={contraseña}
-          onChangeText={(text) => setContraseña(text)}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
         />
-        <Button title="Iniciar Sesión" onPress={handleLogin} />
+        <Button title="Iniciar Sesión" onPress={handleLogin}/>
       </SafeAreaView>
     </View>
   );
