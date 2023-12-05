@@ -8,6 +8,8 @@ import {
 import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
+import Info from "./Info";
+
 const Drawer = createDrawerNavigator();
 
 
@@ -23,10 +25,10 @@ const Screems = () => {
     drawerItemStyle: {
       width: '100%',
     },
-    drawerActiveTintColor: 'blue',
-    drawerActiveBackgroundColor: 'blue',
+    drawerActiveTintColor: appColors.fourth,
+    drawerActiveBackgroundColor: appColors.fourth,
     drawerInactiveTintColor: 'write',
-    drawerInactiveBackgroundColor: appColors.primary,
+    drawerInactiveBackgroundColor: appColors.secondary,
     drawerType: 'slide'
   }
   return (
@@ -37,11 +39,13 @@ const Screems = () => {
           drawerStyle: {
             width: 240,
           },
-          drawerInactiveBackgroundColor: appColors.primary ,
+          drawerInactiveBackgroundColor: appColors.fourth,
         }}
       >
         <Drawer.Screen name="Home" component={Welcom} />
         <Drawer.Screen name="Login" component={Login} />
+        <Drawer.Screen name="Porfolio" component={Info} />
+       
       </Drawer.Navigator>
     </NavigationContainer>
   );
