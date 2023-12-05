@@ -1,21 +1,35 @@
-import React from "react";
-import { StyleSheet, View, Text, Image,Button } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  Button,
+  Modal,
+  Alert,
+  Pressable,
+} from "react-native";
+import appColors from "../assets/style/appColors";
+import Login from "./Login";
+import { useNavigation } from "@react-navigation/native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
-const Welcom = () => {
+const Welcom = ({navigation}) => {
+   
   return (
-    <View >
-      <View style={styles.imagenP}>
+    <View style={styles.fondo}>
+      <View>
         <Image
           style={styles.imagen}
           source={require("./../assets/Logo-PLG.png")}
         />
-      </View >
-      <View style={styles.text}>
-        <Text style={styles.colorText}>Bienvenidos</Text>
-        <Text style={styles.colorText}>La app donde encontraras informacion variada</Text>
       </View>
-      <View style={styles.Bstyle}>
-        <Button title="Login" />
+      <View>
+      <Text>Bienvenidos</Text>
+      </View>
+      <View>
+        <Button title="boton" onPress={() => navigation.navigate("Login")}/>
+      
       </View>
     </View>
   );
@@ -23,31 +37,33 @@ const Welcom = () => {
 
 const styles = StyleSheet.create({
   imagen: {
-    margin: 2,
+    alignItems: "center",
+    alignContent: "center",
     height: 200,
     width: 200,
   },
-  imagenP:{
-    display: 'flex',
-    flex: 1,
+
+  text: {
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 50,
   },
-  text:{
-    flex:1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    
+  colorText: {
+    color: "white",
+    fontSize: 24,
   },
-  colorText:{
-    color: 'white',
-    fontSize:24,
+  Bstyle: {
+    alignItems: "center",
+    width: 100,
   },
-  Bstyle:{
-    flex: 1,
-    borderColor:'red',
-   
-    
-  }
- 
+  fondo: {
+    backgroundColor: appColors.primary,
+    width: "100%",
+    height: "100%",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  boton: {},
 });
 
 export default Welcom;
