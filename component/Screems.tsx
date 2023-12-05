@@ -8,7 +8,7 @@ import {
 import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
-import Head from "./Head";
+
 import Info from "./Info";
 const Drawer = createDrawerNavigator();
 

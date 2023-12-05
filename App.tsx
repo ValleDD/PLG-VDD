@@ -2,7 +2,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Screems from './component/Screems';
 import appColors from './assets/style/appColors';
-import Head from './component/Head';
+
 
 
 export default function App() {
