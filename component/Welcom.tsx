@@ -10,12 +10,10 @@ import {
   Pressable,
 } from "react-native";
 import appColors from "../assets/style/appColors";
-import Login from "./Login";
-import { useNavigation } from "@react-navigation/native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+
 
 const Welcom = ({navigation}) => {
-   
+  
   return (
     <View style={styles.fondo}>
       <View>
@@ -57,7 +55,7 @@ const styles = StyleSheet.create({
     width: 100,
   },
   fondo: {
-    backgroundColor: appColors.primary,
+    backgroundColor: appColors.secondary,
     width: "100%",
     height: "100%",
     alignContent: "center",
