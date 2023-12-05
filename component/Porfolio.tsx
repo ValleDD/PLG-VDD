@@ -14,7 +14,8 @@ import { CardData, ProfileData } from "../data/CardType";
 import CardList from "./CardList";
 import Card from "./Card";
 import QR from "./QR";
-import { Ionicons } from "@expo/vector-icons";
+import appColors from "../assets/style/appColors";
+
 interface PorfolioProps {
   setIsValleProfile: React.Dispatch<React.SetStateAction<boolean>>;
   isLightMode: boolean;
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   backgroundLight: {
-    backgroundColor: "#43D6F5",
+    backgroundColor: appColors.secondary,
   },
   backgroundDark: {
     backgroundColor: "#232D3F",

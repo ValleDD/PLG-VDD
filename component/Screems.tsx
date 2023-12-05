@@ -8,44 +8,40 @@ import {
 import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
-import Info from "./Info";
 
+import Info from "./Info";
 const Drawer = createDrawerNavigator();
 
 
 const Screems = () => {
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
     // header: ({navigation}) => <CustomHeader navigation={navigation}></CustomHeader>,
-    headerTitle: 'My App Name',
+    headerTitle: 'Cubo Rubick',
     headerTitleAlign: 'center',
     headerStyle: {
       backgroundColor: appColors.primary
     },
-    headerTintColor: appColors.primary,
+    headerTintColor: 'black',
     drawerItemStyle: {
       width: '100%',
     },
-    drawerActiveTintColor: appColors.fourth,
-    drawerActiveBackgroundColor: appColors.fourth,
-    drawerInactiveTintColor: 'write',
-    drawerInactiveBackgroundColor: appColors.secondary,
-    drawerType: 'slide'
+    drawerContentStyle: {width:270, borderRadius:30},
+    drawerActiveTintColor: 'white',
+    drawerActiveBackgroundColor: appColors.secondary,
+    drawerInactiveTintColor: 'black',
+    drawerInactiveBackgroundColor: appColors.primary,
+    drawerType: 'back'
   }
   return (
-    <NavigationContainer   >
+    <NavigationContainer  >
       <Drawer.Navigator
         initialRouteName="Home"
-        screenOptions={{
-          drawerStyle: {
-            width: 240,
-          },
-          drawerInactiveBackgroundColor: appColors.fourth,
-        }}
+        screenOptions={
+        drawerNavigatorScreenOptions}
       >
         <Drawer.Screen name="Home" component={Welcom} />
         <Drawer.Screen name="Login" component={Login} />
         <Drawer.Screen name="Porfolio" component={Info} />
-       
       </Drawer.Navigator>
     </NavigationContainer>
   );
