@@ -1,39 +1,34 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
 import {
   StyleSheet,
   View,
   Text,
-  Image,
   Button,
   SafeAreaView,
   TextInput,
-  Alert,
 } from "react-native";
 import appColors from "../assets/style/appColors";
 
-const users =[
-{username:"valle",password:"valle"},
-{username:"Carmen",password:"Carmen"},
-{username:"Adassa",password:"Adassa"},
-]
 
-const Login = ({navigation}) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+
+
+const Login: React.FC = (navigation ) => {
+ 
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+ 
 
   const handleLogin = () => {
     // Verifica si las credenciales coinciden con algún usuario en el array
-    const user = users.find((user) => user.username === username && user.password === password);
 
-    if (user) {
-      navigation.navigate('Porfolio');
-    } else {
-      alert('Credenciales incorrectas');
-    }
+    if(username=="valle" && password=="1234")
+     console.log("hola");
+  
   };
   
   return (
-    <View style={styles.fondo}>
+
+<View style={styles.fondo}>
       <SafeAreaView style={styles.container}>
         <Text>Usuario: </Text>
         <TextInput
@@ -53,6 +48,8 @@ const Login = ({navigation}) => {
         <Button title="Iniciar Sesión" onPress={handleLogin}/>
       </SafeAreaView>
     </View>
+ 
+    
   );
 };
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
 import {
   DrawerNavigationOptions,
   createDrawerNavigator,
@@ -10,38 +10,42 @@ import appColors from "../assets/style/appColors";
 import Login from "./Login";
 
 import Info from "./Info";
+
+
 const Drawer = createDrawerNavigator();
 
-
 const Screems = () => {
+
+
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
-    // header: ({navigation}) => <CustomHeader navigation={navigation}></CustomHeader>,
-    headerTitle: 'Cubo Rubick',
-    headerTitleAlign: 'center',
+    headerTitle: "Cubo Rubick",
+    headerTitleAlign: "center",
     headerStyle: {
-      backgroundColor: appColors.primary
+      backgroundColor: appColors.primary,
     },
-    headerTintColor: 'black',
+    headerTintColor: "black",
     drawerItemStyle: {
-      width: '100%',
+      width: "100%",
     },
-    drawerContentStyle: {width:270, borderRadius:30},
-    drawerActiveTintColor: 'white',
+    drawerContentStyle: { width: 270, borderRadius: 30 },
+    drawerActiveTintColor: "white",
     drawerActiveBackgroundColor: appColors.secondary,
-    drawerInactiveTintColor: 'black',
+    drawerInactiveTintColor: "black",
     drawerInactiveBackgroundColor: appColors.primary,
-    drawerType: 'back'
-  }
+    drawerType: "back",
+  };
   return (
-    <NavigationContainer  >
+    <NavigationContainer>
       <Drawer.Navigator
         initialRouteName="Home"
-        screenOptions={
-        drawerNavigatorScreenOptions}
+        screenOptions={drawerNavigatorScreenOptions}
       >
         <Drawer.Screen name="Home" component={Welcom} />
-        <Drawer.Screen name="Login" component={Login} />
-        <Drawer.Screen name="Porfolio" component={Info} />
+       
+          <Drawer.Screen name="Login" component={Login} />
+      
+          <Drawer.Screen name="Porfolio" component={Info} />
+      
       </Drawer.Navigator>
     </NavigationContainer>
   );
