@@ -1,4 +1,4 @@
-import React, { useState , useContext} from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -8,21 +8,21 @@ import {
   TextInput,
 } from "react-native";
 import appColors from "../assets/style/appColors";
+import Info from "./Info";
 
 
 
 
-const Login: React.FC = (navigation ) => {
+const Login: React.FC = ( {navigation}) => {
  
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
  
 
   const handleLogin = () => {
-    // Verifica si las credenciales coinciden con algún usuario en el array
-
     if(username=="valle" && password=="1234")
-     console.log("hola");
+    navigation.navigate("Porfolio")
+  
   
   };
   
@@ -55,7 +55,7 @@ const Login: React.FC = (navigation ) => {
 
 const styles = StyleSheet.create({
   fondo: {
-    backgroundColor: appColors.primary,
+    backgroundColor: appColors.secondary,
     height: "100%",
     width: "auto",
   },
