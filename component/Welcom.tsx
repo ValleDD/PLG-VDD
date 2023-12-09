@@ -1,19 +1,8 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  View,
-  Text,
-  Image,
-  Button,
-  Modal,
-  Alert,
-  Pressable,
-} from "react-native";
+import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import appColors from "../assets/style/appColors";
 
-
-const Welcom = ({navigation}) => {
-  
+const Welcom = ({ navigation }) => {
   return (
     <View style={styles.fondo}>
       <View>
@@ -23,11 +12,21 @@ const Welcom = ({navigation}) => {
         />
       </View>
       <View>
-      <Text>Bienvenidos</Text>
+      <Image
+         
+          source={require("./../assets/cubo2.png")}
+        />
       </View>
       <View>
-        <Button title="boton" onPress={() => navigation.navigate("Login")}/>
-      
+        <Text style={styles.textBV}>Bienvenidos</Text>
+      </View>
+      <View>
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.textB}>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -61,7 +60,22 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignItems: "center",
   },
-  boton: {},
+  boton: {
+    backgroundColor: "#9FB9E9",
+    borderRadius: 80,
+    padding: 25,
+    margin: 100,
+    alignItems: "center",
+    borderColor:"black"
+  },
+  textBV:{
+    fontSize: 30,
+    fontWeight: "bold",
+    
+  },
+  textB: {
+    fontSize: 20,
+  },
 });
 
 export default Welcom;
