@@ -8,25 +8,36 @@ import {
   TextInput,
 } from "react-native";
 import appColors from "../assets/style/appColors";
-import Info from "./Info";
+import Info from "../component/Info";
+import { useAuth } from "../context/Context";
 
 
 
 
-const Login: React.FC = ( {navigation}) => {
+
+const Login: React.FC = ({navigation}) => {
  
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+
+ const [username,setUsername]= useState('');
+ const [password,setPassword]= useState('');
+ const {login} = useAuth();
+
  
 
   const handleLogin = () => {
-    if(username=="valle" && password=="1234")
-    navigation.navigate("Porfolio")
+
+    if (username === 'valle' && password === '1234') {
+      login({username})
+      navigation.navigate('home'as never)
+    }
+    
+  }
+   
   
   
-  };
+
   
-  return (
+return (
 
 <View style={styles.fondo}>
       <SafeAreaView style={styles.container}>
@@ -75,3 +86,10 @@ const styles = StyleSheet.create({
   },
 });
 export default Login;
+
+function setError (arg0: string){
+  throw new Error('funtion no implementada')
+}
+function setIsAuthenticated(arg0: boolean){
+  throw new Error('funtion no implementada')
+}
