@@ -9,7 +9,7 @@ import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
 
-import Info from "./Info";
+import Info from "../component/Info";
 
 
 const Drawer = createDrawerNavigator();
