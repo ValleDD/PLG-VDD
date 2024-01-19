@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState} from "react";
 import {
   StyleSheet,
   View,
@@ -8,29 +8,24 @@ import {
   TextInput,
 } from "react-native";
 import appColors from "../assets/style/appColors";
-import Info from "../component/Info";
-import { useAuth } from "../context/Context";
+import { UserContext } from "../context/UserContext";
+
+interface LoginProps{
+  navigation: any;
+}
 
 
-
-
-
-const Login: React.FC = ({navigation}) => {
- 
-
- const [username,setUsername]= useState('');
- const [password,setPassword]= useState('');
- const {login} = useAuth();
-
- 
+const Login: React.FC<LoginProps> = ({navigation}) => {
+  const {setUser} = useContext(UserContext);
+  const [name,setName]= useState<string>("");
+  const [password,setPassword]= useState<string>("");
 
   const handleLogin = () => {
 
-    if (username === 'valle' && password === '1234') {
-      login({username})
-      navigation.navigate('home'as never)
-    }
-    
+    setUser({name,password});
+
+    navigation.navigate('Porfolio')
+
   }
    
   
@@ -45,8 +40,8 @@ return (
         <TextInput
           placeholder="Usuario"
           style={styles.input}
-          value={username}
-          onChangeText={(text) => setUsername(text)}
+          value={name}
+          onChangeText={(e) => setName(e)}
         />
         <Text>Contraseña</Text>
         <TextInput
@@ -54,7 +49,7 @@ return (
           placeholder="Contraseña"
           secureTextEntry
           value={password}
-          onChangeText={(text) => setPassword(text)}
+          onChangeText={(e) => setPassword(e)}
         />
         <Button title="Iniciar Sesión" onPress={handleLogin}/>
       </SafeAreaView>
@@ -87,9 +82,4 @@ const styles = StyleSheet.create({
 });
 export default Login;
 
-function setError (arg0: string){
-  throw new Error('funtion no implementada')
-}
-function setIsAuthenticated(arg0: boolean){
-  throw new Error('funtion no implementada')
-}
+
