@@ -10,6 +10,7 @@ import appColors from "../assets/style/appColors";
 import Login from "./Login";
 
 import Info from "../component/Info";
+import Register from "./Register";
 
 
 const Drawer = createDrawerNavigator();
@@ -45,6 +46,7 @@ const Screems = () => {
           <Drawer.Screen name="Login" component={Login} />
       
           <Drawer.Screen name="Porfolio" component={Info} />
+          <Drawer.Screen name="Registro" component={Register}/>
       
       </Drawer.Navigator>
     </NavigationContainer>
