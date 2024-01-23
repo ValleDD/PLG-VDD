@@ -4,19 +4,22 @@ import appColors from "../assets/style/appColors";
 import { User, UserContext } from "../context/UserContext";
 
 const Register:React.FC = () => {
-    const {user,setUser}=useContext(UserContext);
+    const [name,setName]= useState<String>('');
     const [password,setPassword]= useState<String>('');
+    const [email,setEmail]= useState<String>('');
 
     const handleRegister=async () => {
         try {
-            const response = await fetch('URL_DE_TU_API/registro', {
+            const response = await fetch('http://172.16.100.165:8888/users/register', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
-                ...user,
-                password: password,
+                name: name,
+                email: email,
+                password: password
+                
               }),
             });
             if (!response.ok) {
@@ -26,10 +29,12 @@ const Register:React.FC = () => {
             
       // Si la solicitud es exitosa, actualiza el contexto con el nuevo usuario registrado
       const newUser: User = await response.json();
-      setUser(newUser);
+      setName('');
       console.log('Registro exitoso:', newUser);
+     
+     
     } catch (error) {
-      console.error('Error al registrar el usuario:');
+      console.error('Error al registrar el usuario', error);
     }
   
         
@@ -44,14 +49,14 @@ const Register:React.FC = () => {
 
       <View style={styles.container}>
         <Text>Nombre:</Text>
-        <TextInput  style={styles.input}/>
+        <TextInput   placeholder="Ingresa tu nombre" onChangeText={(text)=>setName(text)}  style={styles.input} />
         <Text>Email:</Text>
-        <TextInput style={styles.input} />
+        <TextInput placeholder="Ingrese su email" onChangeText={(text)=>setEmail(text)} keyboardType="email-address" style={styles.input} />
         <Text>Contraseña:</Text>
-        <TextInput style={styles.input} />
+        <TextInput  onChangeText={(text)=> setPassword(text)} placeholder="Ingrese su contraseña" secureTextEntry style={styles.input} />
       </View>
       <View style={styles.centrarButton}>
-        <Pressable style={styles.stButtons}>
+        <Pressable style={styles.stButtons} onPress={handleRegister}>
             <Text style={styles.textButton}>Register</Text>
         </Pressable>
       </View>
@@ -62,11 +67,10 @@ const styles = StyleSheet.create({
   fondo: {
     backgroundColor: appColors.secondary,
     height: "100%",
-    width: "auto",
+    //width: "auto",
   },
   container: {
     flex: 1,
-    //justifyContent: "center",
     alignItems: "center",
     padding: 16,
   },
@@ -75,10 +79,12 @@ const styles = StyleSheet.create({
     width: "70%",
     borderColor: "black",
     borderWidth: 2,
-    marginBottom: 16,
-    paddingLeft: 8,
+    marginBottom: 18,
+    paddingLeft: 'auto',
     borderRadius:23,
-    paddingTop:21,
+    paddingTop:'auto',
+   
+   
   },
   titulo:{
     fontWeight: 'bold',
