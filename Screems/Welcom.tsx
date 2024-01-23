@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
 import appColors from "../assets/style/appColors";
 
-const Welcom = ({ navigation }) => {
+interface WelcomProps{
+  navigation: any;
+}
+
+const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
   return (
     <View style={styles.fondo}>
       <View>
