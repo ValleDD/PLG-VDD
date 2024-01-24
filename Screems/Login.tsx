@@ -1,4 +1,4 @@
-import React, { useContext, useState} from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -6,35 +6,62 @@ import {
   Button,
   SafeAreaView,
   TextInput,
+  Alert,
 } from "react-native";
 import appColors from "../assets/style/appColors";
-import { UserContext } from "../context/UserContext";
+import { User, UserContext } from "../context/UserContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-interface LoginProps{
+interface ApiRespose {
+  success: boolean;
+  message?: string;
+  cookie?: string;
+  name?: string;
+}
+
+interface LoginProps {
   navigation: any;
 }
 
+const Login: React.FC<LoginProps> = ({ navigation }) => {
+  const [name, setName] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
-const Login: React.FC<LoginProps> = ({navigation}) => {
-  const {setUser} = useContext(UserContext);
-  const [name,setName]= useState<string>("");
-  const [password,setPassword]= useState<string>("");
+  const handleLogin = async () => {
+    try {
+      // Envía los datos a la API para verificar la autenticación
+      const response = await fetch('http://192.168.1.36:8888/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, password }),
+      });
 
-  const handleLogin = () => {
+      // Controla las posibles respuestas de la API
+      if (response.ok) {
+        // Si la respuesta es exitosa, obtén la cookie del encabezado de la respuesta
+        const cookie = response.headers.get('Set-Cookie');
 
-    setUser({name,password});
+        // Almacena la cookie en el local storage del dispositivo
+        await AsyncStorage.setItem('authCookie', cookie);
 
-    navigation.navigate('Porfolio')
-
-  }
-   
+        // Redirige a la pantalla principal o realiza alguna acción adicional
+        // Puedes usar la navegación o cualquier otro método según tu aplicación
+         navigation.navigate('Porfolio');
+      } else {
+        // Maneja las respuestas no exitosas de la API
+        Alert.alert('Error', 'Credenciales incorrectas')
+      }
+    } catch (error) {
+      console.error('Error al realizar la autenticación:', error);
+    }
+  };
   
-  
+ 
 
-  
-return (
-
-<View style={styles.fondo}>
+  return (
+    <View style={styles.fondo}>
       <SafeAreaView style={styles.container}>
         <Text>Usuario: </Text>
         <TextInput
@@ -51,11 +78,10 @@ return (
           value={password}
           onChangeText={(e) => setPassword(e)}
         />
-        <Button title="Iniciar Sesión" onPress={handleLogin}/>
+        <Button title="Iniciar Sesión" onPress={handleLogin} />
+        <Button title="Cerrar Sesión" onPress={handleLogout} />
       </SafeAreaView>
     </View>
- 
-    
   );
 };
 
@@ -81,5 +107,3 @@ const styles = StyleSheet.create({
   },
 });
 export default Login;
-
-
