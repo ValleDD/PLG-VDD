@@ -10,7 +10,7 @@ import {
 } from "../data/ValleInfo";
 import Porfolio from "./Porfolio";
 
-export default function Info() {
+export default function Valle() {
   const [isValleProfile, setIsValleProfile] = useState(true);
   const [isLightMode, setIsLightMode] = useState(true);
   return (

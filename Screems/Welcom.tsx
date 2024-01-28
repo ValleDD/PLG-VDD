@@ -1,12 +1,20 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from "react-native";
 import appColors from "../assets/style/appColors";
 
-interface WelcomProps{
+interface WelcomProps {
   navigation: any;
 }
 
 const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
+ 
   return (
     <View style={styles.fondo}>
       <View>
@@ -16,21 +24,23 @@ const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
         />
       </View>
       <View>
-      <Image
-         
-          source={require("./../assets/cubo2.png")}
-        />
+        <Image source={require("./../assets/cubo2.png")} />
       </View>
       <View>
         <Text style={styles.textBV}>Bienvenidos</Text>
       </View>
+
       <View>
-        <TouchableOpacity
-          style={styles.boton}
-          onPress={() => navigation.navigate("Login")}
-        >
-          <Text style={styles.textB}>Login</Text>
-        </TouchableOpacity>
+        
+          <TouchableOpacity
+            style={styles.boton}
+            onPress={() => navigation.navigate('Login')}
+          >
+            <Text style={styles.textB}>Login</Text>
+          </TouchableOpacity>
+       
+         
+        
       </View>
     </View>
   );
@@ -70,12 +80,11 @@ const styles = StyleSheet.create({
     padding: 25,
     margin: 100,
     alignItems: "center",
-    borderColor:"black"
+    borderColor: "black",
   },
-  textBV:{
+  textBV: {
     fontSize: 30,
     fontWeight: "bold",
-    
   },
   textB: {
     fontSize: 20,

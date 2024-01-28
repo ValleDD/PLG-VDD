@@ -24,6 +24,7 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
+  const {setUser}= useContext(UserContext);
   const [name, setName] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -44,11 +45,11 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         const cookie = response.headers.get('Set-Cookie');
 
         // Almacena la cookie en el local storage del dispositivo
-        await AsyncStorage.setItem('authCookie', cookie);
-
+        await AsyncStorage.setItem('authCookie', cookie || '');
+        setUser({name,password, isLoggedIn:true});
         // Redirige a la pantalla principal o realiza alguna acción adicional
         // Puedes usar la navegación o cualquier otro método según tu aplicación
-         navigation.navigate('Porfolio');
+         navigation.navigate('Cierre');
       } else {
         // Maneja las respuestas no exitosas de la API
         Alert.alert('Error', 'Credenciales incorrectas')
@@ -79,7 +80,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
           onChangeText={(e) => setPassword(e)}
         />
         <Button title="Iniciar Sesión" onPress={handleLogin} />
-        <Button title="Cerrar Sesión" onPress={handleLogout} />
+       
       </SafeAreaView>
     </View>
   );

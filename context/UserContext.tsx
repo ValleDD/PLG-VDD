@@ -9,6 +9,7 @@ import {
   export type User = {
     name: string;
     password: string;
+    isLoggedIn: boolean;
   };
   
   export interface UserContextInterface {
@@ -20,6 +21,7 @@ import {
     user: {
       name: "",
       password: "",
+      isLoggedIn: false,
     },
     setUser: (user: User) => {},
   } as UserContextInterface;
