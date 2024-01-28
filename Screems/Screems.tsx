@@ -18,7 +18,7 @@ import Valle from "../component/Valle";
 const Drawer = createDrawerNavigator();
 
 const Screems = () => {
-  const { user } = useContext(UserContext);
+  const { isLoggerId } = useContext(UserContext);
 
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
     headerTitle: "Cubo Rubick",
@@ -43,7 +43,7 @@ const Screems = () => {
         initialRouteName="Home"
         screenOptions={drawerNavigatorScreenOptions}
       >
-        {user ? (
+        {isLoggerId ? (
           <>
             <Drawer.Screen name="Home" component={Welcom} />
 

@@ -14,6 +14,7 @@ import {
   
   export interface UserContextInterface {
     user: User;
+    isLoggerId: boolean;
     setUser: Dispatch<SetStateAction<User>>;
   }
   
