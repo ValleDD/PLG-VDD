@@ -1,31 +1,24 @@
-import {
-    Dispatch,
-    ReactNode,
-    SetStateAction,
-    createContext,
-    useState,
-  } from "react";
-  
-  export type User = {
+
+  import { createContext, Dispatch, SetStateAction, useContext} from 'react';
+
+  export interface User {
     name: string;
     password: string;
     isLoggedIn: boolean;
-  };
+  }
   
   export interface UserContextInterface {
     user: User;
-    isLoggerId: boolean;
     setUser: Dispatch<SetStateAction<User>>;
+    login: (name: string, password: string) => Promise<void>;
+    logout: () => Promise<void>;
+    isLoggedIn: boolean;
   }
+  export const UserContext = createContext<UserContextInterface | undefined>(undefined);
+
+
   
-  const defaultState = {
-    user: {
-      name: "",
-      password: "",
-      isLoggedIn: false,
-    },
-    setUser: (user: User) => {},
-  } as UserContextInterface;
+ 
+
   
-  export const UserContext = createContext(defaultState);
   

@@ -9,8 +9,9 @@ import {
   Alert,
 } from "react-native";
 import appColors from "../assets/style/appColors";
-import { User, UserContext } from "../context/UserContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {  UserContext } from "../context/UserContext";
+import { useUser } from "../provider/UserProvider";
+
 
 interface ApiRespose {
   success: boolean;
@@ -24,43 +25,22 @@ interface LoginProps {
 }
 
 const Login: React.FC<LoginProps> = ({ navigation }) => {
-  const {setUser}= useContext(UserContext);
-  const [name, setName] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const {login}= useUser();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
     try {
-      // Envía los datos a la API para verificar la autenticación
-      const response = await fetch('http://192.168.1.36:8888/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, password }),
-      });
-
-      // Controla las posibles respuestas de la API
-      if (response.ok) {
-        // Si la respuesta es exitosa, obtén la cookie del encabezado de la respuesta
-        const cookie = response.headers.get('Set-Cookie');
-
-        // Almacena la cookie en el local storage del dispositivo
-        await AsyncStorage.setItem('authCookie', cookie || '');
-        setUser({name,password, isLoggedIn:true});
-        // Redirige a la pantalla principal o realiza alguna acción adicional
-        // Puedes usar la navegación o cualquier otro método según tu aplicación
-         navigation.navigate('Cierre');
-      } else {
-        // Maneja las respuestas no exitosas de la API
-        Alert.alert('Error', 'Credenciales incorrectas')
-      }
+      await login(username, password);
+      // Si la petición de inicio de sesión es exitosa
+      navigation.navigate('Logout');
     } catch (error) {
-      console.error('Error al realizar la autenticación:', error);
+      // Si hay un error en la petición de inicio de sesión
+      console.error('Error en el inicio de sesión:', error);
+      // Puedes mostrar un mensaje de error o manejar de otra manera según tus necesidades
+      Alert.alert('Error', 'Credenciales incorrectas');
     }
   };
-  
- 
-
   return (
     <View style={styles.fondo}>
       <SafeAreaView style={styles.container}>
@@ -68,8 +48,8 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
         <TextInput
           placeholder="Usuario"
           style={styles.input}
-          value={name}
-          onChangeText={(e) => setName(e)}
+          value={username}
+          onChangeText={(e) => setUsername(e)}
         />
         <Text>Contraseña</Text>
         <TextInput

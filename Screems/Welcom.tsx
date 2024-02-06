@@ -1,12 +1,13 @@
-import React, { useContext, useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
   Text,
   Image,
   TouchableOpacity,
-  Alert,
+ 
 } from "react-native";
+
 import appColors from "../assets/style/appColors";
 
 interface WelcomProps {
@@ -29,18 +30,14 @@ const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
       <View>
         <Text style={styles.textBV}>Bienvenidos</Text>
       </View>
-
+    
       <View>
-        
-          <TouchableOpacity
-            style={styles.boton}
-            onPress={() => navigation.navigate('Login')}
-          >
-            <Text style={styles.textB}>Login</Text>
-          </TouchableOpacity>
-       
-         
-        
+        <TouchableOpacity
+          style={styles.boton}
+          onPress={() => navigation.navigate("Login")}
+        >
+          <Text style={styles.textB}>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import appColors from "../assets/style/appColors";
 import { User, UserContext } from "../context/UserContext";
+import { useUser } from "../provider/UserProvider";
 
 interface RegisterProps{
   navigation: any;
@@ -20,12 +21,12 @@ const Register: React.FC<RegisterProps> = ({navigation}) => {
   const [email, setEmail] = useState<String>("");
   
 
-  const { setUser } = useContext(UserContext);
+  const { setUser } = useUser();
 
   const handleRegister = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.36:8888/users/register",
+        "http://192.168.1.34:8888/users/register",
         {
           method: "POST",
           headers: {
