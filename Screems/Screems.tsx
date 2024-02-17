@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import {
@@ -8,14 +8,14 @@ import {
 import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
-
-import Info from "../component/Info";
-
+import Register from "./Register";
+import PorfolioValle from "../component/PorfolioValle";
+import { useUser } from "../provider/UserProvider";
 
 const Drawer = createDrawerNavigator();
 
 const Screems = () => {
-
+  const { isLoggedIn } = useUser();
 
   const drawerNavigatorScreenOptions: DrawerNavigationOptions = {
     headerTitle: "Cubo Rubick",
@@ -40,12 +40,19 @@ const Screems = () => {
         initialRouteName="Home"
         screenOptions={drawerNavigatorScreenOptions}
       >
-        <Drawer.Screen name="Home" component={Welcom} />
-       
-          <Drawer.Screen name="Login" component={Login} />
-      
-          <Drawer.Screen name="Porfolio" component={Info} />
-      
+        {isLoggedIn ? (
+          <>
+            <Drawer.Screen name="Home" component={Welcom} />
+            
+          </>
+        ) : (
+          <>
+            <Drawer.Screen name="Home" component={Welcom} />
+            <Drawer.Screen name="Login" component={Login} />
+            <Drawer.Screen name="Registro" component={Register} />
+            <Drawer.Screen name="Porfolio" component={PorfolioValle} />
+          </>
+        )}
       </Drawer.Navigator>
     </NavigationContainer>
   );
