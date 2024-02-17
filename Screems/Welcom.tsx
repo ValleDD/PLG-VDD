@@ -1,29 +1,36 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text, Image, TouchableOpacity } from "react-native";
+import React from "react";
+import {StyleSheet,View,Text,Image,TouchableOpacity,Button} from "react-native";
+import { useUser } from "../provider/UserProvider";
 import appColors from "../assets/style/appColors";
 
-interface WelcomProps{
+interface WelcomProps {
   navigation: any;
 }
-
 const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
+  const { logout, isLoggedIn } = useUser();
+  const handleLogout = async () => {
+    await logout();
+    navigation.navigate('Home')
+  };
   return (
     <View style={styles.fondo}>
-      <View>
-        <Image
-          style={styles.imagen}
-          source={require("./../assets/Logo-PLG.png")}
-        />
-      </View>
-      <View>
+    <View>
       <Image
-         
-          source={require("./../assets/cubo2.png")}
-        />
-      </View>
+        style={styles.imagen}
+        source={require("./../assets/Logo-PLG.png")}
+      />
+    </View>
+    <View>
+      <Image source={require("./../assets/cubo2.png")} />
+    </View>
+    <View>
+      <Text style={styles.textBV}>Bienvenidos</Text>
+    </View>
+    {isLoggedIn ? ( // Mostrar el botón solo si el usuario está autenticado
       <View>
-        <Text style={styles.textBV}>Bienvenidos</Text>
+        <Button title="Logout" onPress={handleLogout}/>
       </View>
+    ):( // Mostrar el botón de inicio de sesión solo si el usuario no está autenticado
       <View>
         <TouchableOpacity
           style={styles.boton}
@@ -32,7 +39,8 @@ const Welcom: React.FC<WelcomProps> = ({ navigation }) => {
           <Text style={styles.textB}>Login</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    )}
+  </View>
   );
 };
 
@@ -70,12 +78,11 @@ const styles = StyleSheet.create({
     padding: 25,
     margin: 100,
     alignItems: "center",
-    borderColor:"black"
+    borderColor: "black",
   },
-  textBV:{
+  textBV: {
     fontSize: 30,
     fontWeight: "bold",
-    
   },
   textB: {
     fontSize: 20,
