@@ -33,7 +33,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
     try {
       await login(username, password);
       // Si la petición de inicio de sesión es exitosa
-      navigation.navigate('Logout');
+      navigation.navigate('Home');
     } catch (error) {
       // Si hay un error en la petición de inicio de sesión
       console.error('Error en el inicio de sesión:', error);
@@ -41,6 +41,7 @@ const Login: React.FC<LoginProps> = ({ navigation }) => {
       Alert.alert('Error', 'Credenciales incorrectas');
     }
   };
+ 
   return (
     <View style={styles.fondo}>
       <SafeAreaView style={styles.container}>

@@ -1,14 +1,7 @@
 import React, { useContext, useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  Button,
-  Pressable,
-} from "react-native";
+import { View,Text,TextInput,StyleSheet,Pressable } from "react-native";
 import appColors from "../assets/style/appColors";
-import { User, UserContext } from "../context/UserContext";
+import { User } from "../context/UserContext";
 import { useUser } from "../provider/UserProvider";
 
 interface RegisterProps{
@@ -19,14 +12,12 @@ const Register: React.FC<RegisterProps> = ({navigation}) => {
   const [name, setName] = useState<String>("");
   const [password, setPassword] = useState<String>("");
   const [email, setEmail] = useState<String>("");
-  
-
   const { setUser } = useUser();
 
   const handleRegister = async () => {
     try {
       const response = await fetch(
-        "http://192.168.1.34:8888/users/register",
+        "http://192.168.1.38:8888/users/register",
         {
           method: "POST",
           headers: {
@@ -42,14 +33,11 @@ const Register: React.FC<RegisterProps> = ({navigation}) => {
       if (!response.ok) {
         throw new Error("error en la solicitud," + response.status);
       }
-
-      // Si la solicitud es exitosa, actualiza el contexto con el nuevo usuario registrado
       const newUser: User = await response.json();
       setUser(newUser);
       setName("");
       console.log("Registro exitoso:", newUser);
       navigation.navigate('Login')
-     
     } catch (error) {
       console.error("Error al registrar el usuario", error);
     }

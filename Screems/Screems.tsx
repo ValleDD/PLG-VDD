@@ -8,7 +8,6 @@ import {
 import Welcom from "./Welcom";
 import appColors from "../assets/style/appColors";
 import Login from "./Login";
-import Logout from "./Logout";
 import Register from "./Register";
 import PorfolioValle from "../component/PorfolioValle";
 import { useUser } from "../provider/UserProvider";
@@ -44,7 +43,6 @@ const Screems = () => {
         {isLoggedIn ? (
           <>
             <Drawer.Screen name="Home" component={Welcom} />
-            <Drawer.Screen name="Logout" component={Logout} />
             
           </>
         ) : (
