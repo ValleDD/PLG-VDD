@@ -46,13 +46,14 @@ const Screems = () => {
             <Drawer.Screen name="Home" component={Welcom} />
             <Drawer.Screen name="Porfolio" component={PorfolioValle} />
             <Drawer.Screen name="Audio" component={Recording} />
-            
+            <Drawer.Screen name="Audio" component={Recording} />
           </>
         ) : (
           <>
             <Drawer.Screen name="Home" component={Welcom} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Registro" component={Register} />
+           
           </>
         )}
       </Drawer.Navigator>

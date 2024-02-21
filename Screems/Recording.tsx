@@ -1,11 +1,15 @@
-
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
 import { Audio } from 'expo-av';
+
+interface RecordFile {
+  file: string;
+}
 
 export default function Recording() {
   const [recording, setRecording] = useState<Audio.Recording | undefined>();
   const [recordings, setRecordings] = useState<{ sound: Audio.Sound, duration: string, file: string }[]>([]);
+  const [isRecording, setIsRecording] = useState(false);
 
   async function startRecording() {
     try {
@@ -17,6 +21,7 @@ export default function Recording() {
         });
         const { recording: newRecording } = await Audio.Recording.createAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
         setRecording(newRecording);
+        setIsRecording(true);
       }
     } catch (err) {
       console.error("Failed to start recording: ", err);
@@ -26,6 +31,7 @@ export default function Recording() {
   async function stopRecording() {
     if (!recording) return;
 
+    setIsRecording(false);
     setRecording(undefined);
 
     await recording.stopAndUnloadAsync();
@@ -40,10 +46,27 @@ export default function Recording() {
     setRecordings(allRecordings);
   }
 
+  async function playRecordFile(recordFile: RecordFile): Promise<void> {
+    const playbackObject = new Audio.Sound();
+
+    try {
+      await playbackObject.loadAsync({ uri: recordFile.file });
+      await playbackObject.playAsync();
+    } catch (error) {
+      console.error('Error playing record file:', error);
+    }
+  }
+
   function getDurationFormatted(milliseconds: number) {
     const minutes = milliseconds / 1000 / 60;
     const seconds = Math.round((minutes - Math.floor(minutes)) * 60);
-    return seconds < 10 ? `${Math.floor(minutes)}:0${seconds}` : `${Math.floor(minutes)}:${seconds}`
+    return seconds < 10 ? `${Math.floor(minutes)}:0${seconds}` : `${Math.floor(minutes)}:${seconds}`;
+  }
+
+  function deleteRecording(index: number) {
+    const updatedRecordings = [...recordings];
+    updatedRecordings.splice(index, 1);
+    setRecordings(updatedRecordings);
   }
 
   function getRecordingLines() {
@@ -51,9 +74,10 @@ export default function Recording() {
       return (
         <View key={index} style={styles.row}>
           <Text style={styles.fill}>
-            Recording #{index + 1} | {recordingLine.duration}
+            Audio {index + 1} | {recordingLine.duration}
           </Text>
-          <Button onPress={() => recordingLine.sound.replayAsync()} title="Play"></Button>
+          <Button onPress={() => playRecordFile({ file: recordingLine.file })} title="Play"></Button>
+          <Button onPress={() => deleteRecording(index)} title="Delete"></Button>
         </View>
       );
     });
@@ -66,6 +90,7 @@ export default function Recording() {
   return (
     <View style={styles.container}>
       <Button title={recording ? 'Stop Recording' : 'Start Recording\n\n\n'} onPress={recording ? stopRecording : startRecording} />
+      {isRecording && <ActivityIndicator size="small" color="#0000ff" />}
       {getRecordingLines()}
       <Button title={recordings.length > 0 ? '\n\n\nClear Recordings' : ''} onPress={clearRecordings} />
     </View>
@@ -75,20 +100,16 @@ export default function Recording() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: '100%',
-    width: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
-
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 10,
-    marginRight: 30
+    marginRight: 40
   },
   fill: {
     flex: 1,
