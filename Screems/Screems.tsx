@@ -11,6 +11,7 @@ import Login from "./Login";
 import Register from "./Register";
 import PorfolioValle from "../component/PorfolioValle";
 import { useUser } from "../provider/UserProvider";
+import Recording from "./Recording";
 
 const Drawer = createDrawerNavigator();
 
@@ -43,14 +44,17 @@ const Screems = () => {
         {isLoggedIn ? (
           <>
             <Drawer.Screen name="Home" component={Welcom} />
-            
+            <Drawer.Screen name="Porfolio" component={PorfolioValle} />
+            <Drawer.Screen name="Audio" component={Recording} />
+            <Drawer.Screen name="Audio" component={Recording} />
           </>
         ) : (
           <>
             <Drawer.Screen name="Home" component={Welcom} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Registro" component={Register} />
-            <Drawer.Screen name="Porfolio" component={PorfolioValle} />
+            
+           
           </>
         )}
       </Drawer.Navigator>
