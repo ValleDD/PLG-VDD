@@ -1,6 +1,15 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, ActivityIndicator } from 'react-native';
-import { Audio } from 'expo-av';
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  ActivityIndicator,
+  Pressable,
+} from "react-native";
+import { Audio } from "expo-av";
+import { FontAwesome } from "@expo/vector-icons";
+import appColors from "../assets/style/appColors";
 
 interface RecordFile {
   file: string;
@@ -8,7 +17,9 @@ interface RecordFile {
 
 export default function Recording() {
   const [recording, setRecording] = useState<Audio.Recording | undefined>();
-  const [recordings, setRecordings] = useState<{ sound: Audio.Sound, duration: string, file: string }[]>([]);
+  const [recordings, setRecordings] = useState<
+    { sound: Audio.Sound; duration: string; file: string }[]
+  >([]);
   const [isRecording, setIsRecording] = useState(false);
 
   async function startRecording() {
@@ -17,9 +28,11 @@ export default function Recording() {
       if (perm.status === "granted") {
         await Audio.setAudioModeAsync({
           allowsRecordingIOS: true,
-          playsInSilentModeIOS: true
+          playsInSilentModeIOS: true,
         });
-        const { recording: newRecording } = await Audio.Recording.createAsync(Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY);
+        const { recording: newRecording } = await Audio.Recording.createAsync(
+          Audio.RECORDING_OPTIONS_PRESET_HIGH_QUALITY
+        );
         setRecording(newRecording);
         setIsRecording(true);
       }
@@ -40,7 +53,7 @@ export default function Recording() {
     allRecordings.push({
       sound: sound!,
       duration: getDurationFormatted(status.durationMillis),
-      file: recording.getURI() || ""
+      file: recording.getURI() || "",
     });
 
     setRecordings(allRecordings);
@@ -53,14 +66,16 @@ export default function Recording() {
       await playbackObject.loadAsync({ uri: recordFile.file });
       await playbackObject.playAsync();
     } catch (error) {
-      console.error('Error playing record file:', error);
+      console.error("Error playing record file:", error);
     }
   }
 
   function getDurationFormatted(milliseconds: number) {
     const minutes = milliseconds / 1000 / 60;
     const seconds = Math.round((minutes - Math.floor(minutes)) * 60);
-    return seconds < 10 ? `${Math.floor(minutes)}:0${seconds}` : `${Math.floor(minutes)}:${seconds}`;
+    return seconds < 10
+      ? `${Math.floor(minutes)}:0${seconds}`
+      : `${Math.floor(minutes)}:${seconds}`;
   }
 
   function deleteRecording(index: number) {
@@ -76,8 +91,18 @@ export default function Recording() {
           <Text style={styles.fill}>
             Audio {index + 1} | {recordingLine.duration}
           </Text>
-          <Button onPress={() => playRecordFile({ file: recordingLine.file })} title="Play"></Button>
-          <Button onPress={() => deleteRecording(index)} title="Delete"></Button>
+          <Pressable
+            style={styles.boton}
+            onPress={() => playRecordFile({ file: recordingLine.file })}
+          >
+            <FontAwesome name="play" size={26} color="black" />
+          </Pressable>
+          <Pressable
+            style={styles.boton}
+            onPress={() => deleteRecording(index)}
+          >
+            <FontAwesome name="trash" size={24} color="black" />
+          </Pressable>
         </View>
       );
     });
@@ -89,10 +114,21 @@ export default function Recording() {
 
   return (
     <View style={styles.container}>
-      <Button title={recording ? 'Stop Recording' : 'Start Recording\n\n\n'} onPress={recording ? stopRecording : startRecording} />
+       <Pressable
+        onPress={recording ? stopRecording : startRecording}
+        style={styles.botonS}
+      >
+        <Text style={styles.text}>{recording ? 'Stop' : 'Start'}</Text>
+      </Pressable>
       {isRecording && <ActivityIndicator size="small" color="#0000ff" />}
       {getRecordingLines()}
-      <Button title={recordings.length > 0 ? '\n\n\nClear Recordings' : ''} onPress={clearRecordings} />
+      <Pressable
+          onPress={clearRecordings}
+          style={styles.botonSt}
+          
+        >
+          <Text  style={styles.text}>Clear</Text>
+        </Pressable>
     </View>
   );
 }
@@ -100,19 +136,41 @@ export default function Recording() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: appColors.secondary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+ 
+  boton: {
+    width: 30,
+    margin: 2,
+  },
+  botonS:{
+    height:60,
+    borderRadius: 7,
+    backgroundColor: "#0000FF",
+    padding: 20,
+    marginBottom:20
+  },
+  botonSt:{
+    height:40,
+    borderRadius: 7,
+    backgroundColor: "#943126",
+    padding: 10
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     marginLeft: 10,
-    marginRight: 40
+    marginRight: 40,
   },
   fill: {
     flex: 1,
-    margin: 15
+    margin: 15,
+  },
+  text:{
+    
+    color: 'white'
   }
 });

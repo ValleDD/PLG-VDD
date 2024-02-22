@@ -53,6 +53,7 @@ const Screems = () => {
             <Drawer.Screen name="Home" component={Welcom} />
             <Drawer.Screen name="Login" component={Login} />
             <Drawer.Screen name="Registro" component={Register} />
+            
            
           </>
         )}
